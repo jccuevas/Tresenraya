@@ -138,5 +138,6 @@
         android:padding="8dp"
         android:text="jugador"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@color/colorAccent" />
+        android:textColor="@color/colorAccent"
+        />
 </LinearLayout>

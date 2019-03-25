@@ -1,5 +1,6 @@
 package com.example.tresenraya;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +15,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private boolean turno = false;
-    private int pulsadas =0;
+    private int pulsadas = 0;
 
     private int[] tablero = new int[9];
     private int[] casillas = new int[]{R.id.casilla01, R.id.casilla02, R.id.casilla03, R.id.casilla04, R.id.casilla05, R.id.casilla06, R.id.casilla07, R.id.casilla08, R.id.casilla09};
@@ -66,107 +67,121 @@ public class MainActivity extends AppCompatActivity {
 
             Log.d("pulsada", (String) view.getTag());
             ImageView casilla = (ImageView) view;
-            if (tablero[celda] == 0 && ganador()==0) {
-                if (turno) {
-                    tablero[celda] = 1;
-                    casilla.setImageResource(R.drawable.ic_circulo);
-                } else {
-                    casilla.setImageResource(R.drawable.ic_cruz);
-                    tablero[celda] = -1;
-                }
-                turno = !turno;
-                pulsadas++;
-                int gana=ganador();
-                if(gana!=0)
-                {
-                    String ganador="";
-                    if(gana==1) {
-                        ganador="Jugador B";
-                    }else{
-                        ganador="Jugador A";
+            if (ganador() == 0) {
+                if (tablero[celda] == 0) {
+                    if (turno) {
+                        tablero[celda] = 1;
+                        casilla.setImageResource(R.drawable.ic_circulo);
+                    } else {
+                        casilla.setImageResource(R.drawable.ic_cruz);
+                        tablero[celda] = -1;
                     }
+                    turno = !turno;
+                    pulsadas++;
+                    int gana = ganador();
+                    jugadorGanador(ganador());
+                    if (gana != 0) {
+                        return;
 
-                    Toast.makeText(this,"Ganador es el "+ganador,Toast.LENGTH_LONG).show();
-
+                    }
+                } else {
+                    Toast.makeText(this, R.string.ocupada, Toast.LENGTH_SHORT).show();
                 }
+
+
+                if (pulsadas == 9) {
+                    jugadorGanador(ganador());
+                    return;
+                }
+                jugador(turno);
             } else {
-                Toast.makeText(this, R.string.ocupada,Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Comience una nueva partida", Toast.LENGTH_SHORT).show();
             }
         } catch (NumberFormatException nex) {
             nex.printStackTrace();
         }
-
-        if(pulsadas==9)
-            ganador();
-
-        jugador(turno);
     }
 
     private void resetea() {
-        pulsadas=0;
+        pulsadas = 0;
         for (int i = 0; i < tablero.length; i++) {
             tablero[i] = 0;
             ImageView casilla = findViewById(casillas[i]);
             casilla.setImageResource(R.drawable.ic_casilla);
         }
+        turno = false;
+        jugador(turno);
     }
 
     private int ganador() {
-        int valor=0;
+        int valor = 0;
         //Horizontales
-        valor=tablero[0]+tablero[1]+tablero[2];
-        if(valor ==3)
+        valor = tablero[0] + tablero[1] + tablero[2];
+        if (valor == 3)
             return 1;
-        if(valor==-3)
+        if (valor == -3)
             return -1;
-        valor=tablero[3]+tablero[4]+tablero[5];
-        if(valor ==3)
+        valor = tablero[3] + tablero[4] + tablero[5];
+        if (valor == 3)
             return 1;
-        if(valor==-3)
+        if (valor == -3)
             return -1;
 
-        valor=tablero[6]+tablero[7]+tablero[8];
-        if(valor ==3)
+        valor = tablero[6] + tablero[7] + tablero[8];
+        if (valor == 3)
             return 1;
-        if(valor==-3)
+        if (valor == -3)
             return -1;
 
         //Verticales
-        valor=tablero[0]+tablero[3]+tablero[6];
-        if(valor ==3)
+        valor = tablero[0] + tablero[3] + tablero[6];
+        if (valor == 3)
             return 1;
-        if(valor==-3)
+        if (valor == -3)
             return -1;
 
-        valor=tablero[1]+tablero[4]+tablero[7];
-        if(valor ==3)
+        valor = tablero[1] + tablero[4] + tablero[7];
+        if (valor == 3)
             return 1;
-        if(valor==-3)
+        if (valor == -3)
             return -1;
 
-        valor=tablero[2]+tablero[5]+tablero[8];
-        if(valor ==3)
+        valor = tablero[2] + tablero[5] + tablero[8];
+        if (valor == 3)
             return 1;
-        if(valor==-3)
+        if (valor == -3)
             return -1;
 
         //Diagonales
-        valor=tablero[0]+tablero[4]+tablero[8];
-        if(valor ==3)
+        valor = tablero[0] + tablero[4] + tablero[8];
+        if (valor == 3)
             return 1;
-        if(valor==-3)
+        if (valor == -3)
             return -1;
 
-        valor=tablero[2]+tablero[4]+tablero[6];
-        if(valor ==3)
+        valor = tablero[2] + tablero[4] + tablero[6];
+        if (valor == 3)
             return 1;
-        if(valor==-3)
+        if (valor == -3)
             return -1;
         return 0;
     }
 
-    private void jugador(boolean turno){
+    private void jugador(boolean turno) {
         TextView jugador = findViewById(R.id.jugador);
-        jugador.setText(turno?"Jugador B":"Jugador A");
+        jugador.setText(turno ? "Jugador B" : "Jugador A");
+
+
+    }
+
+    private void jugadorGanador(int ganador) {
+        TextView jugador = findViewById(R.id.jugador);
+        if (ganador == 1) {
+            jugador.setText("Gana el jugador A");
+
+        } else if (ganador == -1) {
+            jugador.setText("Gana el jugador B");
+        } else
+            jugador.setText("Empate");
     }
 }
