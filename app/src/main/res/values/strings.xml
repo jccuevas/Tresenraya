@@ -3,4 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="contentdescription_casilla">casilla vacía</string>
     <string name="titulo">Tres en Raya</string>
+    <string name="ocupada">ocupada!</string>
+    <string name="ganado">Ha ganado</string>
 </resources>

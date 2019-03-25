@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivity"
+    tools:showIn="@layout/activity_main">
+
+
+    <LinearLayout
+        android:id="@+id/main_left"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:id="@+id/main_fila1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/casilla01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/contentdescription_casilla"
+                android:onClick="ponFicha"
+                android:tag="1"
+                app:srcCompat="@drawable/ic_casilla" />
+
+            <ImageView
+                android:id="@+id/casilla02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/contentdescription_casilla"
+                android:onClick="ponFicha"
+                android:tag="2"
+                app:srcCompat="@drawable/ic_casilla" />
+
+            <ImageView
+                android:id="@+id/casilla03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/contentdescription_casilla"
+                android:onClick="ponFicha"
+                android:tag="3"
+                app:srcCompat="@drawable/ic_casilla" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_fila2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/casilla04"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/contentdescription_casilla"
+                android:onClick="ponFicha"
+                android:tag="4"
+                app:srcCompat="@drawable/ic_casilla" />
+
+            <ImageView
+                android:id="@+id/casilla05"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/contentdescription_casilla"
+                android:onClick="ponFicha"
+                android:tag="5"
+                app:srcCompat="@drawable/ic_casilla" />
+
+            <ImageView
+                android:id="@+id/casilla06"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/contentdescription_casilla"
+                android:onClick="ponFicha"
+                android:tag="6"
+                app:srcCompat="@drawable/ic_casilla" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_fila3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/casilla07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/contentdescription_casilla"
+                android:onClick="ponFicha"
+                android:tag="7"
+                app:srcCompat="@drawable/ic_casilla" />
+
+            <ImageView
+                android:id="@+id/casilla08"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/contentdescription_casilla"
+                android:onClick="ponFicha"
+                android:tag="8"
+                app:srcCompat="@drawable/ic_casilla" />
+
+            <ImageView
+                android:id="@+id/casilla09"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/contentdescription_casilla"
+                android:onClick="ponFicha"
+                android:tag="9"
+                app:srcCompat="@drawable/ic_casilla" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+
+            android:gravity="center_horizontal"
+            android:text="@string/titulo"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/jugador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|center_vertical"
+            android:padding="8dp"
+            android:text="jugador"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/colorAccent" />
+    </LinearLayout>
+
+</LinearLayout>
