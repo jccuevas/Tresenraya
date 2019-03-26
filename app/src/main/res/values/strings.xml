@@ -6,4 +6,7 @@
     <string name="ocupada">ocupada!</string>
     <string name="ganado">Ha ganado</string>
     <string name="fichajugador">Ficha del jugador</string>
+    <string name="mi_direccion">Mi dirección</string>
+    <string name="alertdialog_ip_title">Su dirección IP</string>
+    <string name="tresenraya">Tres en Raya</string>
 </resources>

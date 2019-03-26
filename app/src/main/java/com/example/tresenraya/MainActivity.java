@@ -1,30 +1,41 @@
 package com.example.tresenraya;
 
+import android.content.DialogInterface;
 import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int UDP_PORT = 50000;
     private boolean turno = true;
     private int pulsadas = 0;
-    private InetAddress local;
 
     private int[] tablero = new int[9];
     private int[] casillas = new int[]{R.id.casilla01, R.id.casilla02, R.id.casilla03, R.id.casilla04, R.id.casilla05, R.id.casilla06, R.id.casilla07, R.id.casilla08, R.id.casilla09};
@@ -45,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         jugador(turno);
-        new SetIp().execute();
     }
 
     @Override
@@ -63,7 +73,18 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_address){
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert);
+                    dialog.setIcon(R.drawable.ic_action_about)
+                    .setMessage(R.string.tresenraya)
+                    .setTitle(R.string.alertdialog_ip_title)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                }
+                            });
+            dialog.create();
+            dialog.show();
             return true;
         }
 
@@ -123,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
         }
         turno = true;
         jugador(turno);
-        new SetIp().execute();
+
     }
 
     private int ganador() {
@@ -286,58 +307,4 @@ public class MainActivity extends AppCompatActivity {
             jugador.setText("Empate");
     }
 
-    private void setIp(InetAddress ipLocal) {
-        TextView ip = findViewById(R.id.ip);
-        if(ipLocal!=null){
-
-            ip.setText(ipLocal.toString());
-        } else{
-            ip.setText("Error");
-        }
-
-
-    }
-
-    private class OnlineGame implements Runnable {
-
-        String ipDestino;
-
-        public OnlineGame(String destino) {
-            ipDestino = destino;
-        }
-
-        @Override
-        public void run() {
-
-        }
-    }
-
-    private class SetIp extends AsyncTask<Void, Void, InetAddress> {
-
-        @Override
-        protected InetAddress doInBackground(Void... voids) {
-            try {
-                ConnectivityManager cm =
-                        (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
-
-                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-                boolean isConnected = activeNetwork != null &&
-                        activeNetwork.isConnectedOrConnecting();
-                if(isConnected && activeNetwork.getType()== ConnectivityManager.TYPE_WIFI) {
-                    return InetAddress.getLocalHost();
-                }else return null;
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
-            return null;
-
-        }
-
-        @Override
-        protected void onPostExecute(InetAddress inetAddress) {
-            super.onPostExecute(inetAddress);
-            setIp(inetAddress);
-
-        }
-    }
 }
