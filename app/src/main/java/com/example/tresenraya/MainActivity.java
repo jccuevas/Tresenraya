@@ -109,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
             tablero[i] = 0;
             ImageView casilla = findViewById(casillas[i]);
             casilla.setImageResource(R.drawable.ic_casilla);
+            casilla.setBackgroundColor(0xFFFFFFFF);
+
         }
         turno = true;
         jugador(turno);
@@ -116,56 +118,107 @@ public class MainActivity extends AppCompatActivity {
 
     private int ganador() {
         int valor = 0;
+        int resultado = 0;
+        int a = 0, b = 0, c = 0;
+
         //Horizontales
+
         valor = tablero[0] + tablero[1] + tablero[2];
-        if (valor == 3)
-            return 1;
-        if (valor == -3)
-            return -1;
+
+        if (valor == 3) {
+            resultado = 1;
+            a=0;b=1;c=2;
+        }
+        if (valor == -3) {
+            resultado = -1;
+            a=0;b=1;c=2;
+        }
+
         valor = tablero[3] + tablero[4] + tablero[5];
-        if (valor == 3)
-            return 1;
-        if (valor == -3)
-            return -1;
+        if (valor == 3) {
+            resultado = 1;
+            a=3;b=4;c=5;
+        }
+        if (valor == -3) {
+            a=3;b=4;c=5;
+            resultado = -1;
+        }
+
 
         valor = tablero[6] + tablero[7] + tablero[8];
-        if (valor == 3)
-            return 1;
-        if (valor == -3)
-            return -1;
+
+        if (valor == 3) {
+            a=6;b=7;c=8;
+            resultado = 1;
+        }
+        if (valor == -3) {
+            a=6;b=7;c=8;
+            resultado = -1;
+        }
 
         //Verticales
         valor = tablero[0] + tablero[3] + tablero[6];
-        if (valor == 3)
-            return 1;
-        if (valor == -3)
-            return -1;
+        if (valor == 3) {
+            a=0;b=3;c=6;
+            resultado = 1;
+        }
+        if (valor == -3) {
+            a=0;b=3;c=6;
+            resultado = -1;
+        }
 
         valor = tablero[1] + tablero[4] + tablero[7];
-        if (valor == 3)
-            return 1;
-        if (valor == -3)
-            return -1;
+        if (valor == 3) {
+            a=1;b=4;c=7;
+            resultado = 1;
+        }
+        if (valor == -3) {
+            a=1;b=4;c=7;
+            resultado = -1;
+        }
 
         valor = tablero[2] + tablero[5] + tablero[8];
-        if (valor == 3)
-            return 1;
-        if (valor == -3)
-            return -1;
+        if (valor == 3) {
+            a=2;b=5;c=8;
+            resultado = 1;
+        }
+        if (valor == -3) {
+            a=2;b=5;c=8;
+            resultado = -1;
+        }
 
         //Diagonales
         valor = tablero[0] + tablero[4] + tablero[8];
-        if (valor == 3)
-            return 1;
-        if (valor == -3)
-            return -1;
+        if (valor == 3) {
+            a=0;b=4;c=8;
+            resultado = 1;
+        }
+        if (valor == -3) {
+            a=0;b=4;c=8;
+            resultado = -1;
+        }
 
         valor = tablero[2] + tablero[4] + tablero[6];
-        if (valor == 3)
-            return 1;
-        if (valor == -3)
-            return -1;
-        return 0;
+        if (valor == 3) {
+            a=2;b=4;c=6;
+            resultado = 1;
+        }
+        if (valor == -3) {
+            a=2;b=4;c=6;
+            resultado = -1;
+        }
+
+        if (resultado != 0)
+            pintaGanador(a, b, c);
+
+        return resultado;
+    }
+
+    private void pintaGanador(int a, int b, int c) {
+        findViewById(casillas[a]).setBackgroundColor(0x7700FF00);
+        findViewById(casillas[b]).setBackgroundColor(0x7700FF00);
+        findViewById(casillas[c]).setBackgroundColor(0x7700FF00);
+
     }
 
     private void jugador(boolean turno) {
@@ -176,8 +229,8 @@ public class MainActivity extends AppCompatActivity {
         ficha.setImageResource(dameFicha(turno));
     }
 
-    private int dameFicha(boolean turno){
-        return turno?R.drawable.ic_cruz:R.drawable.ic_circulo;
+    private int dameFicha(boolean turno) {
+        return turno ? R.drawable.ic_cruz : R.drawable.ic_circulo;
     }
 
     private void jugadorGanador(int ganador) {
