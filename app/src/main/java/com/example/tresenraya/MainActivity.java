@@ -1,6 +1,9 @@
 package com.example.tresenraya;
 
 import android.media.Image;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,9 +17,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public class MainActivity extends AppCompatActivity {
     private boolean turno = true;
     private int pulsadas = 0;
+    private InetAddress local;
 
     private int[] tablero = new int[9];
     private int[] casillas = new int[]{R.id.casilla01, R.id.casilla02, R.id.casilla03, R.id.casilla04, R.id.casilla05, R.id.casilla06, R.id.casilla07, R.id.casilla08, R.id.casilla09};
@@ -37,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         jugador(turno);
+        new SetIp().execute();
     }
 
     @Override
@@ -114,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         }
         turno = true;
         jugador(turno);
+        new SetIp().execute();
     }
 
     private int ganador() {
@@ -127,20 +137,28 @@ public class MainActivity extends AppCompatActivity {
 
         if (valor == 3) {
             resultado = 1;
-            a=0;b=1;c=2;
+            a = 0;
+            b = 1;
+            c = 2;
         }
         if (valor == -3) {
             resultado = -1;
-            a=0;b=1;c=2;
+            a = 0;
+            b = 1;
+            c = 2;
         }
 
         valor = tablero[3] + tablero[4] + tablero[5];
         if (valor == 3) {
             resultado = 1;
-            a=3;b=4;c=5;
+            a = 3;
+            b = 4;
+            c = 5;
         }
         if (valor == -3) {
-            a=3;b=4;c=5;
+            a = 3;
+            b = 4;
+            c = 5;
             resultado = -1;
         }
 
@@ -148,63 +166,87 @@ public class MainActivity extends AppCompatActivity {
         valor = tablero[6] + tablero[7] + tablero[8];
 
         if (valor == 3) {
-            a=6;b=7;c=8;
+            a = 6;
+            b = 7;
+            c = 8;
             resultado = 1;
         }
         if (valor == -3) {
-            a=6;b=7;c=8;
+            a = 6;
+            b = 7;
+            c = 8;
             resultado = -1;
         }
 
         //Verticales
         valor = tablero[0] + tablero[3] + tablero[6];
         if (valor == 3) {
-            a=0;b=3;c=6;
+            a = 0;
+            b = 3;
+            c = 6;
             resultado = 1;
         }
         if (valor == -3) {
-            a=0;b=3;c=6;
+            a = 0;
+            b = 3;
+            c = 6;
             resultado = -1;
         }
 
         valor = tablero[1] + tablero[4] + tablero[7];
         if (valor == 3) {
-            a=1;b=4;c=7;
+            a = 1;
+            b = 4;
+            c = 7;
             resultado = 1;
         }
         if (valor == -3) {
-            a=1;b=4;c=7;
+            a = 1;
+            b = 4;
+            c = 7;
             resultado = -1;
         }
 
         valor = tablero[2] + tablero[5] + tablero[8];
         if (valor == 3) {
-            a=2;b=5;c=8;
+            a = 2;
+            b = 5;
+            c = 8;
             resultado = 1;
         }
         if (valor == -3) {
-            a=2;b=5;c=8;
+            a = 2;
+            b = 5;
+            c = 8;
             resultado = -1;
         }
 
         //Diagonales
         valor = tablero[0] + tablero[4] + tablero[8];
         if (valor == 3) {
-            a=0;b=4;c=8;
+            a = 0;
+            b = 4;
+            c = 8;
             resultado = 1;
         }
         if (valor == -3) {
-            a=0;b=4;c=8;
+            a = 0;
+            b = 4;
+            c = 8;
             resultado = -1;
         }
 
         valor = tablero[2] + tablero[4] + tablero[6];
         if (valor == 3) {
-            a=2;b=4;c=6;
+            a = 2;
+            b = 4;
+            c = 6;
             resultado = 1;
         }
         if (valor == -3) {
-            a=2;b=4;c=6;
+            a = 2;
+            b = 4;
+            c = 6;
             resultado = -1;
         }
 
@@ -242,5 +284,60 @@ public class MainActivity extends AppCompatActivity {
             jugador.setText("Gana el jugador B");
         } else
             jugador.setText("Empate");
+    }
+
+    private void setIp(InetAddress ipLocal) {
+        TextView ip = findViewById(R.id.ip);
+        if(ipLocal!=null){
+
+            ip.setText(ipLocal.toString());
+        } else{
+            ip.setText("Error");
+        }
+
+
+    }
+
+    private class OnlineGame implements Runnable {
+
+        String ipDestino;
+
+        public OnlineGame(String destino) {
+            ipDestino = destino;
+        }
+
+        @Override
+        public void run() {
+
+        }
+    }
+
+    private class SetIp extends AsyncTask<Void, Void, InetAddress> {
+
+        @Override
+        protected InetAddress doInBackground(Void... voids) {
+            try {
+                ConnectivityManager cm =
+                        (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
+
+                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                boolean isConnected = activeNetwork != null &&
+                        activeNetwork.isConnectedOrConnecting();
+                if(isConnected && activeNetwork.getType()== ConnectivityManager.TYPE_WIFI) {
+                    return InetAddress.getLocalHost();
+                }else return null;
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(InetAddress inetAddress) {
+            super.onPostExecute(inetAddress);
+            setIp(inetAddress);
+
+        }
     }
 }
