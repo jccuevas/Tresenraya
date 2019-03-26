@@ -140,4 +140,12 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/colorAccent"
         />
+
+    <ImageView
+        android:id="@+id/ficha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/fichajugador"
+        app:srcCompat="@drawable/ic_cruz" />
 </LinearLayout>

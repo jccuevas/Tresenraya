@@ -5,4 +5,5 @@
     <string name="titulo">Tres en Raya</string>
     <string name="ocupada">ocupada!</string>
     <string name="ganado">Ha ganado</string>
+    <string name="fichajugador">Ficha del jugador</string>
 </resources>

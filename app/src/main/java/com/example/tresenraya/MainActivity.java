@@ -1,5 +1,6 @@
 package com.example.tresenraya;
 
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private boolean turno = false;
+    private boolean turno = true;
     private int pulsadas = 0;
 
     private int[] tablero = new int[9];
@@ -71,9 +72,9 @@ public class MainActivity extends AppCompatActivity {
                 if (tablero[celda] == 0) {
                     if (turno) {
                         tablero[celda] = 1;
-                        casilla.setImageResource(R.drawable.ic_circulo);
+                        casilla.setImageResource(dameFicha(turno));
                     } else {
-                        casilla.setImageResource(R.drawable.ic_cruz);
+                        casilla.setImageResource(dameFicha(turno));
                         tablero[celda] = -1;
                     }
                     turno = !turno;
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
             ImageView casilla = findViewById(casillas[i]);
             casilla.setImageResource(R.drawable.ic_casilla);
         }
-        turno = false;
+        turno = true;
         jugador(turno);
     }
 
@@ -169,9 +170,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void jugador(boolean turno) {
         TextView jugador = findViewById(R.id.jugador);
-        jugador.setText(turno ? "Jugador B" : "Jugador A");
+        jugador.setText(turno ? "Jugador A" : "Jugador B");
 
+        ImageView ficha = findViewById(R.id.ficha);
+        ficha.setImageResource(dameFicha(turno));
+    }
 
+    private int dameFicha(boolean turno){
+        return turno?R.drawable.ic_cruz:R.drawable.ic_circulo;
     }
 
     private void jugadorGanador(int ganador) {

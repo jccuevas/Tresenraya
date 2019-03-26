@@ -138,8 +138,9 @@
             android:id="@+id/titulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_gravity="center_horizontal"
 
+            android:layout_margin="8dp"
             android:gravity="center_horizontal"
             android:text="@string/titulo"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -154,6 +155,14 @@
             android:text="jugador"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/colorAccent" />
+
+        <ImageView
+            android:id="@+id/ficha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/fichajugador"
+            app:srcCompat="@drawable/ic_cruz" />
     </LinearLayout>
 
 </LinearLayout>
